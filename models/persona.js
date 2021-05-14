@@ -19,12 +19,14 @@ const PersonaSchema = Schema({
         required: [true, 'El segundo apellido es obligatorio']
     },
     tipo_identificacion: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'TipoDocumento',
         required: [true, 'El tipo de identificación es obligatorio']
     },
     numero_identificacion: {
         type: String,
-        required: [true, 'El numero de identificación es obligatorio']
+        required: [true, 'El numero de identificación es obligatorio'],
+        unique: true
     },
     correo: {
         type: String,
@@ -34,6 +36,11 @@ const PersonaSchema = Schema({
     telefono: {
         type: String,
         required: [true, 'El telefono es obligatoria'],
+    },
+    direccion: {
+        type: Schema.Types.ObjectId,
+        ref: 'Direccion',
+        require: [true, 'La dirección es obligatoria']
     },
     sexo: {
         type: String,
@@ -48,9 +55,10 @@ const PersonaSchema = Schema({
         required: true,
         emun: ['ADMIN_ROLE', 'USER_ROLE']
     },
-    estado: {
+    habilitado: {
         type: Boolean,
-        default: true
+        default: true,
+        require: true
     },
     google: {
         type: Boolean,
