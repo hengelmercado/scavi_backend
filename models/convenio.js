@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const ConvenioSchema = ({
+const ConvenioSchema = Schema({
     nombre: {
         type: String,
         require: [true, 'El nombre es obligatorio']

@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const PacienteSchema = ({
+const PacienteSchema = Schema({
     persona: {
         type: Schema.Types.ObjectId,
         ref: 'Persona'

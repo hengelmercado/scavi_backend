@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const TerceroSchema = ({
+const TerceroSchema = Schema({
     tipo_identificacion: {
         type: Schema.Types.ObjectId,
         ref: 'TipoDocumento',

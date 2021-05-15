@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const DireccionSchema = ({
+const DireccionSchema = Schema({
     direccion: {
         type: String,
         require: [true, 'La dirección es obligatoria']
