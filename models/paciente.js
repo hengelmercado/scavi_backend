@@ -5,6 +5,10 @@ const PacienteSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Persona'
     },
+    instrumento: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Instrumento'
+    }],
     arl: {
         type: Schema.Types.ObjectId,
         ref: 'Tercero'
