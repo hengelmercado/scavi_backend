@@ -35,11 +35,6 @@ const cargoPut = async(req, res = response) => {
     const {id} = req.params;
     const { _id, ...resto } = req.body;
 
-    const existecargo =  await Cargo.findById(id);
-    if (!existecargo) {
-        throw new Error(`El ID no existe ${id}`)
-    }
-
     const cargo = Cargo.findByIdAndUpdate(id, resto);
 
     res.json({
@@ -49,12 +44,7 @@ const cargoPut = async(req, res = response) => {
 
 const cargoDelete = async(req, res = response) => {
     const {id} = req.params;
-
-    const existecargo =  await Cargo.findById(id);
-    if (!existecargo) {
-        throw new Error(`El ID no existe ${id}`)
-    }
-
+    
     const cargo = await Cargo.findByIdAndUpdate(id, {habilitado: false});
 
     res.json({

@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const { message } = require('../dictionary/dictionary');
 
 const TerceroSchema = Schema({
     tipo_identificacion: {
@@ -8,24 +9,24 @@ const TerceroSchema = Schema({
     },
     numero_identificacion: {
         type: String,
-        require: [true, 'El numero de identificaciòn es obligatorio'],
+        require: [true, message.numero_identificacion],
         unique: true
     },
     razon_social: {
         type: String,
-        require: [true, 'La razón social es obligatoria']
+        require: [true, message.razon_soci_req]
     },
     persona_contacto: {
         type: String,
-        require: [true, 'La persona de contacto es obligatoria']
+        require: [true, ]
     },
     telefono: {
         type: String,
-        require: [true, 'El telefono es obligatorio']
+        require: [true, message.telefono_req]
     },
     email: {
         type: String,
-        require: [true, 'El email es obligatorio'],
+        require: [true, message.correo_req],
         unique: true
     },
     direccion: {

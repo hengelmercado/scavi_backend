@@ -1,13 +1,14 @@
 const { Schema, model } = require('mongoose');
+const { message } = require('../dictionary/dictionary');
 
 const InstrumentoSchema = Schema({
     nombre: {
         type: String,
-        require: [true, 'El nombre es obligatorio']
+        require: [true, message.nombre_req]
     },
     serial: {
         type: String,
-        require: [true, 'El serial es obligatorio'],
+        require: [true, message.serial_req],
         unique: true
     },
     tipoInstrumento: {

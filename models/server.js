@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { rutas } = require('../dictionary/dictionary')
 const {dbConnection} = require('../database/config');
 
 class Server {
@@ -7,10 +8,7 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.tipoDocumentoPath = '/api/tipoDocumento';
-        this.tipoInstrumentoPath = '/api/tipoInstrumento';
-        this.paisPath = '/api/pais';
-        
+
         // Conectar a base de datos
         this.cnnectarDB();
 
@@ -38,9 +36,9 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.paisPath, require('../routes/pais'));
-        this.app.use(this.tipoDocumentoPath, require('../routes/tipoDocumento'));
-        this.app.use(this.tipoInstrumentoPath, require('../routes/tipoInstrumento'));
+        this.app.use(rutas.pais, require('../routes/pais'));
+        this.app.use(rutas.tipoDocumento, require('../routes/tipoDocumento'));
+        this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
     }
     
     listen(){

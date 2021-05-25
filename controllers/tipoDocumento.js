@@ -34,11 +34,6 @@ const tipoDocumentoPut = async(req, res = response) => {
     const {id} = req.params;
     const { _id, ...resto } = req.body;
 
-    const existeTipoDocumento =  await TipoDocumento.findById(id);
-    if (!existeTipoDocumento) {
-        throw new Error(`El ID no existe ${id}`)
-    }
-
     const tipoDocumento = TipoDocumento.findByIdAndUpdate(id, resto);
 
     res.json({
@@ -48,11 +43,6 @@ const tipoDocumentoPut = async(req, res = response) => {
 
 const tipoDocumentoDelete = async(req, res = response) => {
     const {id} = req.params;
-
-    const existeTipoDocumento =  await TipoDocumento.findById(id);
-    if (!existeTipoDocumento) {
-        throw new Error(`El ID no existe ${id}`)
-    }
 
     const tipoDocumento = await TipoDocumento.findByIdAndUpdate(id, {habilitado: false});
 

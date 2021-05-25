@@ -1,9 +1,10 @@
-const {Schema, model} = require('mongoose') 
+const {Schema, model} = require('mongoose'); 
+const { message } = require('../dictionary/dictionary');
 
 const CargoSchema = Schema({
     nombre: {
         type: String,
-        require: [true, 'El nombre es obligatorio']
+        require: [true, message.nombre_req]
     },
     descipcion: {
         type: String

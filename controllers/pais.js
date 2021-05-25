@@ -35,11 +35,6 @@ const paisPut = async(req, res = response) => {
     const {id} = req.params;
     const { _id, ...resto } = req.body;
 
-    const existepais =  await pais.findById(id);
-    if (!existepais) {
-        throw new Error(`El ID no existe ${id}`)
-    }
-
     const pais = Pais.findByIdAndUpdate(id, resto);
 
     res.json({
@@ -49,11 +44,6 @@ const paisPut = async(req, res = response) => {
 
 const paisDelete = async(req, res = response) => {
     const {id} = req.params;
-
-    const existepais =  await Pais.findById(id);
-    if (!existepais) {
-        throw new Error(`El ID no existe ${id}`)
-    }
 
     const pais = await Pais.findByIdAndUpdate(id, {habilitado: false});
 

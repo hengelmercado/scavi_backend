@@ -1,54 +1,55 @@
 
 const { Schema, model } = require('mongoose');
+const { message } = require('../dictionary/dictionary');
 
 const PersonaSchema = Schema({
     primer_nombre: {
         type: String,
-        required: [true, 'El primer nombre es obligatorio']
+        required: [true, message.prim_nombre_req]
     },
     segundo_nombre: {
         type: String,
-        required: [true, 'El segundo nombre es obligatorio']
+        required: [true, message.seg_nombre_req]
     },
     primer_Apellido: {
         type: String,
-        required: [true, 'El primero apellido es obligatorio']
+        required: [true, message.prim_apellido_req]
     },
     segundo_Apellido: {
         type: String,
-        required: [true, 'El segundo apellido es obligatorio']
+        required: [true, message.seg_apellido_req]
     },
     tipo_identificacion: {
         type: Schema.Types.ObjectId,
         ref: 'TipoDocumento',
-        required: [true, 'El tipo de identificación es obligatorio']
+        required: [true, message.tipo_identificacion_req]
     },
     numero_identificacion: {
         type: String,
-        required: [true, 'El numero de identificación es obligatorio'],
+        required: [true, message.num_identificacion_req],
         unique: true
     },
     correo: {
         type: String,
-        required: [true, 'El correo es obligatorio'],
+        required: [true, message.correo_req],
         unique: true
     },
     telefono: {
         type: String,
-        required: [true, 'El telefono es obligatoria'],
+        required: [true, message.telefono_req],
     },
     direccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
-        require: [true, 'La dirección es obligatoria']
+        require: [true, message.dir_req]
     },
     sexo: {
         type: String,
-        require: [true, 'El sexo es obligatorio']
+        require: [true, message.sexo_req]
     },
     fecha_de_nacimiento: {
         type: String,
-        require: [true, 'La fecha de nacimiento es obligatorio']
+        require: [true, message.fecha_naci_req]
     },
     rol: {
         type: String,

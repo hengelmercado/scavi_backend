@@ -1,9 +1,10 @@
 const {Schema, model} = require('mongoose');
+const { message } = require('../dictionary/dictionary');
 
 const DireccionSchema = Schema({
     direccion: {
         type: String,
-        require: [true, 'La dirección es obligatoria']
+        require: [true, message.dir_req]
     },
     ciudad: {
         type: Schema.Types.ObjectId,

@@ -1,13 +1,14 @@
 const {Schema, model} = require('mongoose');
+const { message } = require('../dictionary/dictionary');
 
 const  TipoDocumentoSchema = Schema({
     nombre: {
         type: String,
-        require: [true, 'El nombre es obligatorio']
+        require: [true, message.nombre_req]
     },
     siglas: {
         type: String,
-        require: [true, 'Las siglas son obligatorias']
+        require: [true, message.siglas_req]
     },
     habilitado: {
         type: Boolean,

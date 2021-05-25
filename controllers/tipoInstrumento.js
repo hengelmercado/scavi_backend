@@ -38,11 +38,6 @@ const tipoInstrumentoPut = async(req, res = response) => {
     const { id } = req.params;
     const { _id, ...resto } = req.body;
 
-    const existeTipoInstrumento = await TipoInstrumento.findById(id);
-    if( !existeTipoInstrumento ) {
-        throw new Error( `El ID ${id} no existe` );
-    }
-
     const tipoInstrumento = TipoInstrumento.findByIdAndUpdate(id, resto);
 
     res.json({
@@ -53,11 +48,6 @@ const tipoInstrumentoPut = async(req, res = response) => {
 const tipoInstrumentoDelete = async(req, res = response) => {
     
     const { id } = req.params;
-
-    const existeTipoInstrumento = await TipoInstrumento.findById(id);
-    if( !existeTipoInstrumento ) {
-        throw new Error( `El ID ${id} no existe` );
-    }
 
     const tipoInstrumento = TipoInstrumento.findByIdAndUpdate(id, {habilitado: false});
 

@@ -1,25 +1,29 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
+const { existeCargoPorId } = require('../helpers/db-validators');
 const { cargoGet, cargoPost, cargoPut, cargoDelete } = require('../controllers/cargo');
+const { message } = require('../dictionary/dictionary');
 
 const router = Router();
 
 router.get('/', cargoGet);
 
 router.post('/', [
-    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('descripcion', 'El tamaño maximo es de 100 caracteres').isLength(100),
+    check('nombre', message.nombre_req).not().isEmpty(),
+    check('descripcion', message.desc_tamano).isLength(100),
     validarCampos,
 ], cargoPost);
 
 router.put('/:id', [
-    check('id', 'No es un ID válido').isMongoId(),
+    check('id', message.id_no_valid).isMongoId(),
+    check('id').custom(existeCargoPorId),
     validarCampos,
 ], cargoPut);
 
 router.delete('/:id', [
-    check('id', 'No es un ID válido').isMongoId(),
+    check('id', message.id_no_valid).isMongoId(),
+    check('id').custom(existeCargoPorId),
     validarCampos,
 ], cargoDelete);
 
