@@ -10,7 +10,7 @@ class Server {
         this.port = process.env.PORT;
 
         // Conectar a base de datos
-        this.cnnectarDB();
+        this.connectarDB();
 
         //Middlewares
         this.middlewares();
@@ -36,6 +36,8 @@ class Server {
     }
 
     routes() {
+        this.app.use(rutas.ciudad, require('../routes/ciudad'));
+        this.app.use(rutas.departamento, require('../routes/departamento'));
         this.app.use(rutas.pais, require('../routes/pais'));
         this.app.use(rutas.tipoDocumento, require('../routes/tipoDocumento'));
         this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
@@ -43,7 +45,7 @@ class Server {
     
     listen(){
         this.app.listen(this.port, () => {
-            console.log(`Example app listening at http://localhost:${this.port}`)
+            console.log(`Example app listening at http://localhost:${this.port}`);
         });
     }
 }

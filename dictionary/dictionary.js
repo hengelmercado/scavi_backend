@@ -20,6 +20,8 @@ const message = {
     id_no_valid             :   'No es un ID válido.',
     desc_tamano             :   'El tamaño maximo es de 100 caracteres.',
     id_no_existe            :   'El ID no existe:',
+
+    nombre_existe           :   'El nombre ya existe',
 }
 
 const referencias = {
@@ -27,6 +29,8 @@ const referencias = {
 }
 
 const rutas = {
+    ciudad          :   '/api/ciudad',
+    departamento    :   '/api/departamento',
     pais            :   '/api/pais',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',

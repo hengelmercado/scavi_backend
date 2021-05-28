@@ -17,3 +17,5 @@ const MedicoSchema = Schema({
         require: true
     }
 });
+
+module.exports = model('Medico', MedicoSchema);

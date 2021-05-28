@@ -22,7 +22,7 @@ const PersonaSchema = Schema({
     tipo_identificacion: {
         type: Schema.Types.ObjectId,
         ref: 'TipoDocumento',
-        required: [true, message.tipo_identificacion_req]
+        required: true
     },
     numero_identificacion: {
         type: String,
@@ -41,7 +41,7 @@ const PersonaSchema = Schema({
     direccion: {
         type: Schema.Types.ObjectId,
         ref: 'Direccion',
-        require: [true, message.dir_req]
+        require: true
     },
     sexo: {
         type: String,
@@ -60,11 +60,7 @@ const PersonaSchema = Schema({
         type: Boolean,
         default: true,
         require: true
-    },
-    google: {
-        type: Boolean,
-        default: false
-    },
+    }
 });
 
 module.exports = model( 'Persona', PersonaSchema );

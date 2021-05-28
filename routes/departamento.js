@@ -1,36 +1,38 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { existePaisPorId } = require('../helpers/db-validators');
+const { existePaisPorId, existeDepartamentoPorId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { paisGet, paisPost, paisPut, paisDelete, obtenerPais } = require('../controllers/pais');
 const { message } = require('../dictionary/dictionary');
+const { obtenerDepartamentos, crearDepartamento, actualizarDepartamento, obtenerDepartamento, borrarDepartamento } = require('../controllers/departamento');
 
 const router = Router();
 
-router.get('/', paisGet);
+router.get('/', obtenerDepartamentos);
 
 router.get('/:id', [
     check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existePaisPorId),
+    check('id').custom(existeDepartamentoPorId),
     validarCampos,
-], obtenerPais);
+], obtenerDepartamento);
 
 router.post('/', [
     check('nombre', message.nombre_req).not().isEmpty(),
+    check('pais', message.id_no_valid).isMongoId(),
+    check('pais').custom(existePaisPorId),
     validarCampos,
-], paisPost);
+], crearDepartamento);
 
 router.put('/:id', [
     check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existePaisPorId),
+    check('id').custom(existeDepartamentoPorId),
     validarCampos,
-], paisPut);
+], actualizarDepartamento);
 
 router.delete('/:id', [
     check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existePaisPorId),
+    check('id').custom(existeDepartamentoPorId),
     validarCampos,
-], paisDelete);
+], borrarDepartamento);
 
 
 module.exports = router;

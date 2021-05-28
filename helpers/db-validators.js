@@ -9,21 +9,21 @@ const existeDepartamentoPorId = async(id = '') => {
     }
 }
 
-const existeCargoPorId = (id = '') => {
+const existeCargoPorId = async(id = '') => {
     const existeCargo =  await Cargo.findById(id);
     if (!existeCargo) {
         throw new Error(message.id_no_existe, id)
     }    
 }
 
-const existePaisPorId = (id = '') => {
+const existePaisPorId = async(id = '') => {
     const existePais =  await Pais.findById(id);
     if (!existePais) {
         throw new Error(message.id_no_existe, id)
     }
 }
 
-const existePersonaPorId = (id = '') => {
+const existePersonaPorId = async(id = '') => {
     const existePersona =  await Persona.findById(id);
     if (!existePersona) {
         throw new Error(message.id_no_existe, id)
@@ -31,7 +31,7 @@ const existePersonaPorId = (id = '') => {
 }
 
 
-const existeTipoDocumentoPorId = (id = '') => {
+const existeTipoDocumentoPorId = async(id = '') => {
     const existeTipoDocumento =  await TipoDocumento.findById(id);
     if (!existeTipoDocumento) {
         throw new Error(message.id_no_existe, id)
@@ -39,7 +39,7 @@ const existeTipoDocumentoPorId = (id = '') => {
 }
 
 
-const existeTipoInstrumentoPorId = (id = '') => {
+const existeTipoInstrumentoPorId = async(id = '') => {
     const existeTipoInstrumento =  await TipoInstrumento.findById(id);
     if (!existeTipoInstrumento) {
         throw new Error(message.id_no_existe, id)
