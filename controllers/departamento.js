@@ -62,7 +62,9 @@ const actualizarDepartamento = async(req, res = response) => {
     const { id } = req.params;
     const { _id, habilitado, ...datos } = req.body;
 
-    datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    if(datos.nombre){
+        datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    }
     const departamentoDB = await Departamento.findOne({nombre: datos.nombre});
     if(departamentoDB && String(departamentoDB._id) !== id){
         return res.status(400).json({

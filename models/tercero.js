@@ -41,5 +41,10 @@ const TerceroSchema = Schema({
     }
 });
 
+TerceroSchema.methods.toJSON = function(){
+    const { __v, _id, ...data } = this.toObject();
+    data.uid = _id;
+    return data
+}
 
 module.exports = model('Tercero', TerceroSchema);

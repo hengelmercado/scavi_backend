@@ -25,5 +25,10 @@ const PacienteSchema = Schema({
     
 });
 
+PacienteSchema.methods.toJSON = function(){
+    const { __v, _id, ...data } = this.toObject();
+    data.uid = _id;
+    return data
+}
 
 module.exports = model('Paciente', PacienteSchema);

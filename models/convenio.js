@@ -34,6 +34,10 @@ const ConvenioSchema = Schema({
     }
 });
 
-
+ConvenioSchema.methods.toJSON = function(){
+    const { __v, _id, ...data } = this.toObject();
+    data.uid = _id;
+    return data
+}
 
 module.exports = model('Convenio', ConvenioSchema);

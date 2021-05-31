@@ -54,10 +54,11 @@ const paisPost = async(req, res = response) => {
 const paisPut = async(req, res = response) => {
     const { id } = req.params;
     const { _id, habilitado, ...datos } = req.body;
-    datos.nombre = await datos.nombre.replace(/^\w/, (c) => c.toUpperCase());
+    if(datos.nombre){
+        datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    }
     
     const paisDB = await Pais.findOne({nombre: datos.nombre});
-
     if(paisDB && String(paisDB._id) !== id){
         return res.status(400).json({
             msg: `${message.nombre_existe} - ${paisDB.nombre}`

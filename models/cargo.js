@@ -16,4 +16,10 @@ const CargoSchema = Schema({
     }
 });
 
+CargoSchema.methods.toJSON = function(){
+    const { __v, _id, ...data } = this.toObject();
+    data.uid = _id;
+    return data
+}
+
 module.exports = model('Cargo', CargoSchema);
