@@ -6,7 +6,7 @@ const CargoSchema = Schema({
         type: String,
         require: [true, message.nombre_req]
     },
-    descipcion: {
+    descripcion: {
         type: String
     },
     habilitado: {

@@ -29,6 +29,7 @@ const referencias = {
 }
 
 const rutas = {
+    cargo           :   '/api/cargo',
     ciudad          :   '/api/ciudad',
     departamento    :   '/api/departamento',
     pais            :   '/api/pais',

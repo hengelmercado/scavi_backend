@@ -36,6 +36,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(rutas.cargo, require('../routes/cargo'));
         this.app.use(rutas.ciudad, require('../routes/ciudad'));
         this.app.use(rutas.departamento, require('../routes/departamento'));
         this.app.use(rutas.pais, require('../routes/pais'));
