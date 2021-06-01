@@ -1,28 +1,36 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { tipoInstrumentoGet, tipoInstrumentoPost, tipoInstrumentoPut, tipoInstrumentoDelete } = require('../controllers/tipoInstrumento');
 const { message } = require('../dictionary/dictionary');
+const { obtenerTipoInstrumentos, obtenerTipoInstrumento, crearTipoInstrumento, actualizarTipoInstrumento, borrarTipoInstrumento } = require('../controllers/tipoInstrumento');
+const { existeTipoInstrumentoPorId } = require('../helpers/db-validators');
 
 const router = Router();
 
-router.get('/', tipoInstrumentoGet);
+router.get('/', obtenerTipoInstrumentos);
+
+router.get('/:id', [
+    check('id', message.id_no_valid).isMongoId(),
+    check('id').custom(existeTipoInstrumentoPorId),
+    validarCampos,
+], obtenerTipoInstrumento);
 
 router.post('/', [
     check('nombre', message.nombre_req).not().isEmpty(),
-    check('descripcion', message.desc_tamano).isLength(100),
     validarCampos,
-], tipoInstrumentoPost);
+], crearTipoInstrumento);
 
 router.put('/:id', [
     check('id', message.id_no_valid).isMongoId(),
+    check('id').custom(existeTipoInstrumentoPorId),
     validarCampos,
-], tipoInstrumentoPut);
+], actualizarTipoInstrumento);
 
 router.delete('/:id', [
     check('id', message.id_no_valid).isMongoId(),
+    check('id').custom(existeTipoInstrumentoPorId),
     validarCampos,
-], tipoInstrumentoDelete);
+], borrarTipoInstrumento);
 
 
 module.exports = router;
