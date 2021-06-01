@@ -2,23 +2,23 @@ const {Schema, model} = require('mongoose');
 const { message } = require('../dictionary/dictionary');
 
 const TerceroSchema = Schema({
-    tipo_identificacion: {
+    tipoDocumento: {
         type: Schema.Types.ObjectId,
         ref: 'TipoDocumento',
         require: true
     },
-    numero_identificacion: {
+    numeroDocumento: {
         type: String,
         require: [true, message.numero_identificacion],
         unique: true
     },
-    razon_social: {
+    razonSocial: {
         type: String,
         require: [true, message.razon_soci_req]
     },
-    persona_contacto: {
+    personaContacto: {
         type: String,
-        require: [true, ]
+        require: [true, message.persona_cont_req]
     },
     telefono: {
         type: String,
