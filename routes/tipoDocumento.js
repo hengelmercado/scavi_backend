@@ -1,29 +1,36 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { tipoDocumentoGet, tipoDocumentoPost, tipoDocumentoPut, tipoDocumentoDelete } = require('../controllers/tipoDocumento');
+const { existeTipoDocumentoPorId } = require('../helpers/db-validators');
+const { obtenerTipoDocumentos, obtenerTipoDocumento, crearTipoDocumento, actualizarTipoDocumento, borrarTipoDocumento } = require('../controllers/tipoDocumento');
 const { message } = require('../dictionary/dictionary');
 
 
 const router = Router();
 
-router.get('/', tipoDocumentoGet);
+router.get('/', obtenerTipoDocumentos);
+
+router.get('/:id', [
+    check('id', message.id_no_valid),
+    check('id').custom(existeTipoDocumentoPorId),
+    validarCampos,
+], obtenerTipoDocumento);
 
 router.post('/', [
     check('nombre', message.nombre_req).not().isEmpty(),
     check('siglas', message.siglas_req).not().isEmpty(),
     validarCampos,
-], tipoDocumentoPost);
+], crearTipoDocumento);
 
 router.put('/:id', [
     check('id', message.id_no_valid).isMongoId(),
     validarCampos,
-], tipoDocumentoPut);
+], actualizarTipoDocumento);
 
 router.delete('/:id', [
     check('id', message.id_no_valid).isMongoId(),
     validarCampos,
-], tipoDocumentoDelete);
+], borrarTipoDocumento);
 
 
 module.exports = router;

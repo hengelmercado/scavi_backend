@@ -1,7 +1,8 @@
 const { response } = require("express");
+const { message } = require('../dictionary/dictionary');
 const TipoDocumento = require('../models/tipoDocumento');
 
-const tipoDocumentoGet = async(req, res = response ) => {
+const obtenerTipoDocumentos = async(req, res = response ) => {
 
     const { limite = 5, desde = 0 } = req.query;
     const query = { habilitado: true }
@@ -19,10 +20,28 @@ const tipoDocumentoGet = async(req, res = response ) => {
     });
 }
 
-const tipoDocumentoPost = async(req, res = response) => {
-    const { nombre, sigla } = req.body;
-    const tipoDocumento = new TipoDocumento({nombre, sigla});
+const obtenerTipoDocumento = async(req, res = response) => {
+ 
+    const { id } = req.params;
 
+    const tipoDocumento = await TipoDocumento.findById(id);
+
+    res.json(tipoDocumento);
+
+}
+
+const crearTipoDocumento = async(req, res = response) => {
+    const {...datos} = req.body;
+    datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    
+    const datosDB = await TipoDocumento.findOne({nombre: datos.nombre});
+    if (datosDB) {
+        return res.status(400).json({
+            msg: `${message.nombre_existe} - ${datosDB.nombre}`
+        });
+    }
+    
+    const tipoDocumento = new TipoDocumento(datos);
     await tipoDocumento.save();
 
     res.json({
@@ -30,21 +49,32 @@ const tipoDocumentoPost = async(req, res = response) => {
     });
 }
 
-const tipoDocumentoPut = async(req, res = response) => {
+const actualizarTipoDocumento = async(req, res = response) => {
     const {id} = req.params;
-    const { _id, ...resto } = req.body;
+    const { _id, ...datos } = req.body;
 
-    const tipoDocumento = TipoDocumento.findByIdAndUpdate(id, resto);
+    if(datos.nombre){
+        datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    }
+    
+    const datosDB = await TipoDocumento.findOne({nombre: datos.nombre});
+    if (datosDB && String(datosDB._id) !== id) {
+        return res.status(400).json({
+            msg: `${message.nombre_existe} - ${datosDB.nombre}`
+        });
+    }
+
+    const tipoDocumento = await TipoDocumento.findByIdAndUpdate(id, datos, { new: true });
 
     res.json({
         tipoDocumento
     });
 }
 
-const tipoDocumentoDelete = async(req, res = response) => {
+const borrarTipoDocumento = async(req, res = response) => {
     const {id} = req.params;
 
-    const tipoDocumento = await TipoDocumento.findByIdAndUpdate(id, {habilitado: false});
+    const tipoDocumento = await TipoDocumento.findByIdAndUpdate(id, {habilitado: false}, { new: true });
 
     res.json({
         tipoDocumento
@@ -53,8 +83,9 @@ const tipoDocumentoDelete = async(req, res = response) => {
 
 
 module.exports = {
-    tipoDocumentoGet,
-    tipoDocumentoPost,
-    tipoDocumentoPut,
-    tipoDocumentoDelete
+    actualizarTipoDocumento,
+    borrarTipoDocumento,
+    crearTipoDocumento,
+    obtenerTipoDocumento,
+    obtenerTipoDocumentos,
 }
