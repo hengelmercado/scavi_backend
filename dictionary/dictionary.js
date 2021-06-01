@@ -32,6 +32,7 @@ const rutas = {
     cargo           :   '/api/cargo',
     ciudad          :   '/api/ciudad',
     departamento    :   '/api/departamento',
+    direccion       :   '/api/direccion',
     pais            :   '/api/pais',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',

@@ -20,6 +20,11 @@ const DireccionSchema = Schema({
     },
     zip: {
         type: String,
+    },
+    habilitado: {
+        type: Boolean,
+        default: true,
+        require: true
     }
 }, { collection: 'direciones'});
 

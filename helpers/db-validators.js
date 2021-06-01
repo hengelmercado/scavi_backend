@@ -1,5 +1,5 @@
 const { message } = require('../dictionary/dictionary');
-const { Departamento, Pais, Cargo, Persona, TipoDocumento, TipoInstrumento, Ciudad } = require('../models')
+const { Departamento, Pais, Cargo, Persona, TipoDocumento, TipoInstrumento, Ciudad, Direccion } = require('../models')
 
 
 const existeDepartamentoPorId = async(id = '') => {
@@ -37,14 +37,12 @@ const existePersonaPorId = async(id = '') => {
     }
 }
 
-
 const existeTipoDocumentoPorId = async(id = '') => {
     const existeTipoDocumento =  await TipoDocumento.findById(id);
     if (!existeTipoDocumento) {
         throw new Error(message.id_no_existe, id)
     }
 }
-
 
 const existeTipoInstrumentoPorId = async(id = '') => {
     const existeTipoInstrumento =  await TipoInstrumento.findById(id);
@@ -53,6 +51,12 @@ const existeTipoInstrumentoPorId = async(id = '') => {
     }
 }
 
+const existeDireccionPorId = async(id = '') => {
+    const existeDireccion =  await Direccion.findById(id);
+    if (!existeDireccion) {
+        throw new Error(message.id_no_existe, id)
+    }
+}
 
 module.exports = {
     existeCargoPorId,
@@ -61,7 +65,8 @@ module.exports = {
     existePaisPorId,
     existePersonaPorId,
     existeTipoDocumentoPorId,
-    existeTipoInstrumentoPorId
+    existeTipoInstrumentoPorId,
+    existeDireccionPorId
 }
 
 
