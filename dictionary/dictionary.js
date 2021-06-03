@@ -22,6 +22,7 @@ const message = {
     id_no_existe            :   'El ID no existe:',
 
     nombre_existe           :   'El nombre ya existe',
+    serial_existe           :   'El serial ya existe',
 }
 
 const referencias = {
@@ -33,7 +34,9 @@ const rutas = {
     ciudad          :   '/api/ciudad',
     departamento    :   '/api/departamento',
     direccion       :   '/api/direccion',
+    instrumento     :   '/api/instrumento',
     pais            :   '/api/pais',
+    tercero         :   '/api/tercero',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',
 }

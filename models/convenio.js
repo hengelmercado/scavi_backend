@@ -19,7 +19,7 @@ const ConvenioSchema = Schema({
     }],
     instrumentos: [{
         type: Schema.Types.ObjectId,
-        ref: 'Instrumentos',
+        ref: 'Instrumento',
     }],
     fecha_inicio: {
         type: Number,

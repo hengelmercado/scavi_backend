@@ -9,7 +9,7 @@ const TerceroSchema = Schema({
     },
     numeroDocumento: {
         type: String,
-        require: [true, message.numero_identificacion],
+        require: [true, message.num_identificacion_req],
         unique: true
     },
     razonSocial: {

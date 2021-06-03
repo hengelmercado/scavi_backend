@@ -16,10 +16,6 @@ const InstrumentoSchema = Schema({
         ref: 'TipoInstrumento',
         require: true
     },
-    convenio: {
-        type: Schema.Types.ObjectId,
-        ref: 'Convenio'
-    },
     habilitado: {
         type: Boolean,
         default: true,

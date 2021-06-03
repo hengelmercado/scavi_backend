@@ -2,7 +2,7 @@ const { response } = require("express");
 const { message } = require("../dictionary/dictionary");
 const { Tercero } = require("../models");
 
-const obtenerTerceros = (res, req = response) => {
+const obtenerTerceros = async(req, res = response) => {
 
     const { limite = 5, desde = 0 } =  req.query;
     const query = { habilitado: true };

@@ -11,11 +11,11 @@ const PersonaSchema = Schema({
         type: String,
         required: [true, message.seg_nombre_req]
     },
-    primer_Apellido: {
+    primer_apellido: {
         type: String,
         required: [true, message.prim_apellido_req]
     },
-    segundo_Apellido: {
+    segundo_apellido: {
         type: String,
         required: [true, message.seg_apellido_req]
     },
