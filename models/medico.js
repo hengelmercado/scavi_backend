@@ -2,8 +2,13 @@ const { Schema, model } = require('mongoose');
 
 const MedicoSchema = Schema({
     persona: {
-        tyep: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Persona',
+        require: true
+    },
+    instrumento: {
+        type: Schema.Types.ObjectId,
+        ref: 'Instrumento',
         require: true
     },
     cargo: {

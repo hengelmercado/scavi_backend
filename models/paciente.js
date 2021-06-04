@@ -3,7 +3,8 @@ const {Schema, model} = require('mongoose');
 const PacienteSchema = Schema({
     persona: {
         type: Schema.Types.ObjectId,
-        ref: 'Persona'
+        ref: 'Persona',
+        unique: true
     },
     instrumento: [{
         type: Schema.Types.ObjectId,

@@ -1,6 +1,5 @@
 const { response } = require('express');
-const Persona = require('../models/persona');
-const { validationResult } = require('express-validator');
+const Persona = require('../models');
 
 const obtenerPersonas = (req, res = response) => {
 
