@@ -6,58 +6,121 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google signin</title>
+    
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <style>
+        table {
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+
 </head>
 <body>
 
     <h1> REST server </h1>
     <hr>
 
-    <!-- <h2>Pais</h2>
+    <button id="btnPais"> Pais </button>
+    <table id="pais" style="display: none;">
+        <thead>
+            <tr>
+                <th>UID</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Habilitado</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyPais">
 
-    <form id="pais" id="pais">
-        <input type="text" id="nombre" name="nombre">
-        <br>
-        <textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
-        <br>
-    </form>
-    <button id="button"> Enviar </button>
-    <input type="reset" value="borrar"> -->
+        </tbody>
+        
+    </table>
+    <button id="btnCiudad"> obtener </button>
+    <table id="ciudad" style="display: none;">
+        <thead>
+            <tr>
+                <th>UID</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Habilitado</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyPais">
 
+        </tbody>
+        
+    </table>
 
     <script>
+        var activa_ahora = '';
 
-        $("#button").click(function () {
-            var form = $("#pais").serializeArray();
-            var datos = new Object();
-            form.forEach(f => {
-                console.log(f.name, f.value);
-                datos[f.name] = f.value
-            });
-            console.log(datos);
-            var settings = {
-                "url": "http://localhost:8081/api/pais",
-                "method": "POST",
-                "data": JSON.stringify(datos),
-            };
-            
+        $("#btnPais").click(function () {    
+            $("#pais").css("display", "block");
+            $(""+activa_ahora).css("display", "none");
+            activa_ahora = "#pais";
+            ajax("pais");
             $.ajax({
-                type: "POST",
+                type: "GET",
                 dataType: 'json',
                 url: "http://localhost:8081/api/pais",
-                data: JSON.stringify(datos),
                 success: function(response) {
                     console.log(response);
+                    if(response.total > 0){
+                        var tbosy = '';
+                        for( i = 0; i < response.total; i++){
+                            tbosy += "<tr>"+
+                                "<td>" + response.datos[i].uid + "</td>" +
+                                "<td>" + response.datos[i].nombre + "</td>" +
+                                "<td>" + response.datos[i].descripcion + "</td>" +
+                                "<td>" + response.datos[i].habilitado + "</td>" +
+                                "</tr>";
+                        }
+                        $("#tbodyPais").html(tbosy);
+                    }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(thrownError);
                     console.log(ajaxOptions);
                 }
-                
-            })
+            });
 
-        })
+        });
+
+        function ajax(coleccion = ''){
+            var url = "http://localhost:8081/api/" + coleccion;
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    if(response.total > 0){
+                        var labels = Object.keys(response.datos[0]);
+                        console.log(labels.reverse());
+                        var tbosy = '';
+                        for( i = 0; i < response.total; i++){
+                            tbosy += "<tr>"+
+                                "<td>" + response.datos[i].uid + "</td>" +
+                                "<td>" + response.datos[i].nombre + "</td>" +
+                                "<td>" + response.datos[i].descripcion + "</td>" +
+                                "<td>" + response.datos[i].habilitado + "</td>" +
+                                "</tr>";
+                        }
+                       return tbosy;
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    console.log(ajaxOptions);
+                }
+            });
+        }
         
     </script>
 
