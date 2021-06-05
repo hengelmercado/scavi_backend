@@ -15,31 +15,48 @@
 
     <h2>Pais</h2>
 
-    <form id="pais" name="pais">
-        <input type="text" name="nombre">
+    <form id="pais" id="pais">
+        <input type="text" id="nombre" name="nombre">
         <br>
         <textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
         <br>
-        <input type="check" name="habilitado" id="habilitado">
-        <br>
-        <button id="button"> Enviar </button>
-        <input type="reset" value="borrar">
     </form>
+    <button id="button"> Enviar </button>
+    <input type="reset" value="borrar">
 
 
     <script>
 
         $("#button").click(function () {
-            var form = $("#pais").serialize();
+            var form = $("#pais").serializeArray();
+            var datos = new Object();
+            form.forEach(f => {
+                console.log(f.name, f.value);
+                datos[f.name] = f.value
+            });
+            console.log(datos);
             var settings = {
                 "url": "http://localhost:8081/api/pais",
                 "method": "POST",
-                "data": form,
+                "data": JSON.stringify(datos),
             };
+            
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "http://localhost:8081/api/pais",
+                data: JSON.stringify(datos),
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    console.log(ajaxOptions);
+                }
+                
+            })
 
-            $.ajax(settings).done(function (response) {
-                alert(response);
-            });
         })
         
     </script>
