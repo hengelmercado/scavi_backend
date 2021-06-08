@@ -51,8 +51,13 @@
     </table>
 
     <script>
+
+        var url = (window.location.hostname.includes('localhost'))
+                    ? 'http://localhost:8081/api/'
+                    : 'https://scavi-backend.herokuapp.com/api/';
+
         function ajax(coleccion = ''){
-            var url = "http://localhost:8081/api/" + coleccion;
+            var url = url + coleccion;
             $.ajax({
                 type: "GET",
                 dataType: 'json',
