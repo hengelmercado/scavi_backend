@@ -52,12 +52,12 @@
 
     <script>
 
-        var url = (window.location.hostname.includes('localhost'))
-                    ? 'http://localhost:8081/api/'
-                    : 'https://scavi-backend.herokuapp.com/api/';
+        var urlHost = (window.location.hostname.includes('localhost'))
+                    ? 'http://localhost:8081/'
+                    : 'https://scavi-backend.herokuapp.com/';
 
         function ajax(coleccion = ''){
-            var url = url + coleccion;
+            var url = urlHost + "api/" + coleccion;
             $.ajax({
                 type: "GET",
                 dataType: 'json',
