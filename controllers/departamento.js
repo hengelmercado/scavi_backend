@@ -12,7 +12,7 @@ const obtenerDepartamentos = async(req, res = response) => {
     const query = { habilitado: true };
 
     const [total, datos] = await Promise.all([
-        Departamento.countDocuments(),
+        Departamento.countDocuments(query),
         Departamento.find(query)
             .populate('pais', 'nombre')
             .skip(Number(desde))

@@ -10,11 +10,15 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
     <style>
-        table {
+        table { 
+            overflow-x: auto;
             width: 100%;
         }
-        table, th, td {
+        th, tr, td {
             border: 1px solid black;
+        }
+        tr {
+            width: 100%;
         }
     </style>
 
@@ -24,73 +28,29 @@
     <h1> REST server </h1>
     <hr>
 
-    <button id="btnPais"> Pais </button>
-    <table id="pais" style="display: none;">
-        <thead>
-            <tr>
-                <th>UID</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Habilitado</th>
-            </tr>
-        </thead>
-        <tbody id="tbodyPais">
+    <button onclick="ajax('pais')"> Pais </button>
+    <button onclick="ajax('departamento')"> Departamento </button>
+    <button onclick="ajax('ciudad')"> Ciudad </button>
+    <button onclick="ajax('tipoDocumento')"> Tipo Documento </button>
+    <button onclick="ajax('tipoInstrumento')"> Tipo Instrumento </button>
+    <button onclick="ajax('direccion')"> dirección </button>
+    <button onclick="ajax('tercero')"> Terceros </button>
+    <button onclick="ajax('instrumento')"> Instrumento </button>
+    <button onclick="ajax('persona')"> Persona </button>
+    <button onclick="ajax('medico')"> Médico </button>
+    <button onclick="ajax('paciente')"> Paciente </button>
 
-        </tbody>
-        
-    </table>
-    <button id="btnCiudad"> obtener </button>
-    <table id="ciudad" style="display: none;">
-        <thead>
-            <tr>
-                <th>UID</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Habilitado</th>
-            </tr>
+
+    <table id="tabla" style="display: none;">
+        <thead id="thead">
         </thead>
-        <tbody id="tbodyPais">
+        <tbody id="tbody">
 
         </tbody>
         
     </table>
 
     <script>
-        var activa_ahora = '';
-
-        $("#btnPais").click(function () {    
-            $("#pais").css("display", "block");
-            $(""+activa_ahora).css("display", "none");
-            activa_ahora = "#pais";
-            ajax("pais");
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: "http://localhost:8081/api/pais",
-                success: function(response) {
-                    console.log(response);
-                    if(response.total > 0){
-                        var tbosy = '';
-                        for( i = 0; i < response.total; i++){
-                            tbosy += "<tr>"+
-                                "<td>" + response.datos[i].uid + "</td>" +
-                                "<td>" + response.datos[i].nombre + "</td>" +
-                                "<td>" + response.datos[i].descripcion + "</td>" +
-                                "<td>" + response.datos[i].habilitado + "</td>" +
-                                "</tr>";
-                        }
-                        $("#tbodyPais").html(tbosy);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                    console.log(ajaxOptions);
-                }
-            });
-
-        });
-
         function ajax(coleccion = ''){
             var url = "http://localhost:8081/api/" + coleccion;
             $.ajax({
@@ -98,20 +58,33 @@
                 dataType: 'json',
                 url: url,
                 success: function(response) {
-                    console.log(response);
                     if(response.total > 0){
-                        var labels = Object.keys(response.datos[0]);
-                        console.log(labels.reverse());
-                        var tbosy = '';
+                        var labels = Object.keys(response.datos[0]).reverse();
+                        var thead = "<tr>";
+
+                        labels.forEach(label => {
+                            thead += "<th>" + label + "</th>";
+                        });
+                        
+                        thead += "</tr>";
+                        
+                        var tbody = '';
                         for( i = 0; i < response.total; i++){
-                            tbosy += "<tr>"+
-                                "<td>" + response.datos[i].uid + "</td>" +
-                                "<td>" + response.datos[i].nombre + "</td>" +
-                                "<td>" + response.datos[i].descripcion + "</td>" +
-                                "<td>" + response.datos[i].habilitado + "</td>" +
-                                "</tr>";
+                            tbody += "<tr>";
+                            labels.forEach(label => {
+                                if(typeof response.datos[i][label] === "object"){
+                                    var object = response.datos[i][label];
+                                    tbody += "<td>" + object.nombre + "</td>";
+                                }else{
+                                    tbody += "<td>" + response.datos[i][label] + "</td>";
+                                }
+                            });
+                            tbody += "</tr>";
                         }
-                       return tbosy;
+                        $("#thead").html(thead);
+                        $("#tbody").html(tbody);
+
+                        $("#tabla").css("display", "block");
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

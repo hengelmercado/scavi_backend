@@ -12,7 +12,7 @@ const obtenerInstrumentos = async(req, res = response) => {
     const [total, datos] = await Promise.all([
         Instrumento.countDocuments(query),
         instrumento.find(query)
-            .populate('TipoInstrumento', 'nombre')
+            .populate('tipoInstrumento', 'nombre')
             .skip(Number(desde))
             .limit(Number(limite))
     ]);
@@ -37,7 +37,7 @@ const crearInstrumento = async(req, res = response) => {
     const { _id, ...datos } = req.body;
 
     datos.serial = datos.serial.trim().toUpperCase();
-    const datosDB = await Tercero.findOne({razonSocual: datos.razonSocial});
+    const datosDB = await Instrumento.findOne({serial: datos.serial});
     if(datosDB){
         return res.status(400).json({
             msg: `${message.serial_existe} - ${datosDB.serial}`

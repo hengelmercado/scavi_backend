@@ -1,12 +1,12 @@
 const { response } = require('express');
-const Persona = require('../models');
+const { Persona } = require('../models');
 
-const obtenerPersonas = (req, res = response) => {
+const obtenerPersonas = async(req, res = response) => {
 
     const {limite = 5, desde = 0} = req.query;
     const query = {habilitado: true};
     
-    const [total, personas] = await Promise.all([
+    const [total, datos] = await Promise.all([
         Persona.countDocuments(query),
         Persona.find(query)
             .populate('tipo_identificacion', 'nombre')
@@ -17,16 +17,16 @@ const obtenerPersonas = (req, res = response) => {
 
     res.json({
         total,
-        personas
+        datos
     });
 
 }
 
-const obtenerPersona = (req, res = response) => {
+const obtenerPersona = async(req, res = response) => {
 
     const { id } = req.params;
 
-    const persona = Persona.findById(id)
+    const persona = await Persona.findById(id)
                         .populate('tipo_identificacion', 'nombre')
                         .populate('direccion');
 
@@ -34,12 +34,12 @@ const obtenerPersona = (req, res = response) => {
 
 }
 
-const crearPersona = (req, res = response) => {
+const crearPersona = async(req, res = response) => {
 
     const  {_id, ...datos} = req.body;
     
     // Verificamos si el usuario existe
-    const existeID = await Usuario.findOne({numero_identificacion: datos.numero_identificacion});
+    const existeID = await Persona.findOne({numero_identificacion: datos.numero_identificacion});
     if (existeID) {
         return res.status(400).json({
             msg: 'El número de identificación ya esta registrado'
@@ -55,12 +55,12 @@ const crearPersona = (req, res = response) => {
 
 }
 
-const actualizarPersona = (req, res = response) => {
+const actualizarPersona = async(req, res = response) => {
 
     const {id} = req.params;
     const {_id, google, ...datos} = req.body;
 
-    const existeID = await Usuario.findOne({numero_identificacion: datos.numero_identificacion});
+    const existeID = await Persona.findOne({numero_identificacion: datos.numero_identificacion});
     if (existeID) {
         return res.status(400).json({
             msg: 'El número de identificación ya esta registrado'
@@ -74,7 +74,7 @@ const actualizarPersona = (req, res = response) => {
 
 }
 
-const borrarPersona = (req, res = response) => {
+const borrarPersona = async(req, res = response) => {
 
     const {id} = req.params;
     const persona = await Persona.findByIdAndUpdate(id, {habilitado: false}, {new: true});

@@ -8,7 +8,7 @@ const obtenerCiudades = async(req, res = response) => {
     const query = {habilitado: true};
 
     const [ total, datos ] = await Promise.all([
-        Ciudad.countDocuments(),
+        Ciudad.countDocuments(query),
         Ciudad.find(query)
             .populate('departamento', 'nombre')
             .skip(Number(desde))
