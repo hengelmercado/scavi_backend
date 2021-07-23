@@ -58,14 +58,14 @@ const crearPersona = async(req, res = response) => {
 const actualizarPersona = async(req, res = response) => {
 
     const {id} = req.params;
-    const {_id, google, ...datos} = req.body;
+    const {_id, uid, google, ...datos} = req.body;
 
-    const existeID = await Persona.findOne({numero_identificacion: datos.numero_identificacion});
+    /* const existeID = await Persona.findOne({numero_identificacion: datos.numero_identificacion});
     if (existeID) {
         return res.status(400).json({
             msg: 'El número de identificación ya esta registrado'
         })
-    }
+    } */
     const persona = await Persona.findByIdAndUpdate(id, datos, { new:true });
 
     res.json({

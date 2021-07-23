@@ -36,7 +36,7 @@ const rutas = {
     direccion       :   '/api/direccion',
     instrumento     :   '/api/instrumento',
     pais            :   '/api/pais',
-    persona            :   '/api/persona',
+    persona         :   '/api/persona',
     tercero         :   '/api/tercero',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',

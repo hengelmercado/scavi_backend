@@ -8,142 +8,124 @@
     <title>Google signin</title>
     
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
-    <style>
-        table { 
-            overflow-x: auto;
-            width: 100%;
-        }
-        th, tr, td {
-            border: 1px solid black;
-        }
-        tr {
-            width: 100%;
-        }
-    </style>
-
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="./form-validation.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/all.css">
 </head>
 <body>
 
-    <h1> REST server </h1>
-    <hr>
-
-    <button onclick="ajax('pais')"> Pais </button>
-    <button onclick="ajax('departamento')"> Departamento </button>
-    <button onclick="ajax('ciudad')"> Ciudad </button>
-    <button onclick="ajax('tipoDocumento')"> Tipo Documento </button>
-    <button onclick="ajax('tipoInstrumento')"> Tipo Instrumento </button>
-    <button onclick="ajax('direccion')"> dirección </button>
-    <button onclick="ajax('tercero')"> Terceros </button>
-    <button onclick="ajax('instrumento')"> Instrumento </button>
-    <button onclick="ajax('persona')"> Persona </button>
-    <button onclick="ajax('medico')"> Médico </button>
-    <button onclick="ajax('paciente')"> Paciente </button>
-
-
-    <table id="tabla" style="display: none;">
-        <thead id="thead">
-        </thead>
-        <tbody id="tbody">
-
-        </tbody>
-        
-    </table>
-
-    <script>
-
-        var urlHost = (window.location.hostname.includes('localhost'))
-                    ? 'http://localhost:8081/'
-                    : 'https://scavi-backend.herokuapp.com/';
-
-        function ajax(coleccion = ''){
-            var url = urlHost + "api/" + coleccion;
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: url,
-                success: function(response) {
-                    if(response.total > 0){
-                        var labels = Object.keys(response.datos[0]).reverse();
-                        var thead = "<tr>";
-
-                        labels.forEach(label => {
-                            thead += "<th>" + label + "</th>";
-                        });
-                        
-                        thead += "</tr>";
-                        
-                        var tbody = '';
-                        for( i = 0; i < response.total; i++){
-                            tbody += "<tr>";
-                            labels.forEach(label => {
-                                if(typeof response.datos[i][label] === "object"){
-                                    var object = response.datos[i][label];
-                                    tbody += "<td>" + object.nombre + "</td>";
-                                }else{
-                                    tbody += "<td>" + response.datos[i][label] + "</td>";
-                                }
-                            });
-                            tbody += "</tr>";
-                        }
-                        $("#thead").html(thead);
-                        $("#tbody").html(tbody);
-
-                        $("#tabla").css("display", "block");
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                    console.log(ajaxOptions);
-                }
-            });
-        }
-        
-    </script>
-
-    <!-- <h1>Google Signin</h1>
-    <hr>
-
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
-
-
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <header class="p-3 mb-3 border-bottom">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
     
-    <script>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Formularios</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                      <li><a class="dropdown-item" onclick="ajax('pais')"> Pais </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('departamento')"> Departamento </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('ciudad')"> Ciudad </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('tipoDocumento')"> Tipo </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('tipoInstrumento')"> Tipo </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('direccion')"> dirección </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('tercero')"> Terceros </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('instrumento')"> Instrumento </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('persona')"> Persona </a></li>
+                      <!-- <li><a class="dropdown-item" onclick="ajax('medico')"> Médico </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('paciente')"> Paciente </a></li> -->
+                    </ul>
+                  </li>
+            </ul>
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+    
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
-        var url = (window.location.hostname.includes('localhost'))
-            ? 'http://localhost:8081/api/auth/google'
-            : 'https://webservice-curso-node.herokuapp.com/api/auth/google';
+    <div class="container">
+        <main class=".col-sm-6 .col-lg-8">
 
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            <div id="message" class="alert alert-warning alert-dismissible" style="display: none;" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            </div>
 
-            var id_token = googleUser.getAuthResponse().id_token;
-            const data = { id_token };
+            <h2>Formulario de: <span id="label"></span></h2>
+                <div class="row g-5">
+                    <div class="col-md-7 col-lg-8">
 
-            fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
-            .then( resp => resp,json() )
-            .then( data =>console.log("Nuestro server", data ) )
-            .catch( error => console.log(error) );
-        }
+                        <form class="needs-validation" novalidate>
+                            <input type="text" id="uid" name="uid" style="display: none;">
+                            <div class="row g-3" id="bodyForm">
+                                <!-- <div class="col-sm-12">
+                                    <label for="firstName" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="" required>
+                                    <div class="invalid-feedback">
+                                        El nombre es requerido.
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="firstName" class="form-label">Descripción</label>
+                                    <textarea type="text" class="form-control" id="descripcion" name="descripcion" ></textarea>
+                                </div> -->
+                            </div>
+                    
+                            <hr class="my-4">
+                    
+                        </form>
+                        <div id="butonForm">
 
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-            console.log('User signed out.');
-            });
-        }
-    </script> -->
+                        </div>
+                        <div id="loading" style="display: none;">
+                            <button class="w-100 btn btn-primary btn-lg" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Cargando...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table style="display: none;" class="table table-striped table-sm">
+                        <thead id="thead">
+                        </thead>
+                        <tbody id="tbody">
+                
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="paginate">
+                    </ul>
+                  </nav>
+            </div>
+        </main>
+    </div>
 
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="./form-validation.js"></script>
+    <script src="./funciones.js"></script>
+    <script src="./assets/js/all.js"></script>
 </body>
 </html>
