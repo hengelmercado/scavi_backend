@@ -40,6 +40,7 @@ const rutas = {
     tercero         :   '/api/tercero',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',
+    dataInstrument :   '/api/dataInstrument',
 }
 
 

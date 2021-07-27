@@ -46,6 +46,8 @@ class Server {
         this.app.use(rutas.tercero, require('../routes/tercero'));
         this.app.use(rutas.tipoDocumento, require('../routes/tipoDocumento'));
         this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
+        this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
+        this.app.use(rutas.dataInstrument, require('../routes/dataInstrument'));
     }
     
     listen(){
