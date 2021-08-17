@@ -10,8 +10,6 @@ const router = Router();
 router.get('/', temperaturaGet);
 
 router.get('/:id', [
-    check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existetemperaturaPorId),
     validarCampos,
 ], obtenertemperatura);
 

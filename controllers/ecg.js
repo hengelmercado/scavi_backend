@@ -23,9 +23,7 @@ const ecgGet = async(req, res = response ) => {
 
 const obtenerecg = async(req, res = response) => {
 
-    const { id } = req.params;
-
-    const ecg = await Ecg.findById(id);
+    const ecg = await Ecg.find({'habilitado':true}).sort('-timestamp').limit(1);
 
     res.json(ecg);
 }

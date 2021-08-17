@@ -9,11 +9,7 @@ const router = Router();
 
 router.get('/', ecgGet);
 
-router.get('/:id', [
-    check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existeecgPorId),
-    validarCampos,
-], obtenerecg);
+router.get('/:id', obtenerecg);
 
 router.post('/', [
     validarCampos,

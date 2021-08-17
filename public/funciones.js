@@ -5,6 +5,8 @@ const paginacion = document.querySelector('#paginate');
 const bodyForm = document.querySelector('#bodyForm');
 const butonForm = document.querySelector('#butonForm');
 const buttonLoading = document.querySelector('#loading');
+const txtRH = document.querySelector('#rh');
+const txtRS = document.querySelector('#rs');
 
 const mes = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ];
 var urlHost = (window.location.hostname.includes('localhost'))
@@ -394,4 +396,54 @@ function loading(estado){
         buttonLoading.style.display = 'none';
     }
 }
+
+function ecg(){
+    var url = urlHost + "api/ecg/1";
+
+    fetch(url, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => response.text())
+    .then(data => {
+        /* const object = JSON.parse(data);
+        const keys = Object.keys(object);
+        keys.forEach(key => {
+            if(key != "habilitado"){
+                if(typeof object[key] === "object"){
+                    document.querySelector('#'+ key).value = object[key]['_id'];
+                }else if( key.includes('fecha')){
+                    const date = new Date(Number(object[key]));
+                    document.querySelector('#'+ key).value = date.getFullYear() + '-' + mes[date.getMonth()] + '-' + date.getDate();
+                } else {
+                    document.querySelector('#'+ key).value = object[key];
+                }
+            }
+        }); */
+
+        const data0 = JSON.parse(data)[0];
+        txtRH.innerText = "RH: " + data0.rh;
+        txtRS.innerText = "FRS: " + data0.frs;
+    })
+    .catch(error => {
+        console.log("error", error);
+        var errors = JSON.parse(error.responseText).errors;
+        var list = '<ul>';
+        for (let index = 0; index < errors.length; index++) {
+            const element = errors[index];
+            list += '<li>' + element.msg + '</li>';
+            
+        }
+        
+        list += '</ul>';
+
+        message.innerHTML = list;
+        message.style.display = '';
+        setTimeout( function (){
+            message.style.display = 'none';
+        }, 3000);
+    });
+}
+
+setInterval(ecg, 3000);
 
