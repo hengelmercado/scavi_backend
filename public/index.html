@@ -38,6 +38,7 @@
                       <li><a class="dropdown-item" onclick="ajax('tercero')"> Terceros </a></li>
                       <li><a class="dropdown-item" onclick="ajax('instrumento')"> Instrumento </a></li>
                       <li><a class="dropdown-item" onclick="ajax('persona')"> Persona </a></li>
+                      <li><a class="dropdown-item" onclick="ajax('ECG')"> ECG </a></li>
                       <!-- <li><a class="dropdown-item" onclick="ajax('medico')"> Médico </a></li>
                       <li><a class="dropdown-item" onclick="ajax('paciente')"> Paciente </a></li> -->
                     </ul>
@@ -134,33 +135,5 @@
     <script src="./form-validation.js"></script>
     <script src="./funciones.js"></script>
     <script src="./assets/js/all.js"></script>
-
-
-    <!-- <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-analytics.js"></script>
-
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyDwNoWWWIvCoQGV3LbRp-5xRI6GfLLWIiw",
-            authDomain: "scavi-plataform.firebaseapp.com",
-            databaseURL: "https://scavi-plataform.firebaseio.com",
-            projectId: "scavi-plataform",
-            storageBucket: "scavi-plataform.appspot.com",
-            messagingSenderId: "208245609042",
-            appId: "1:208245609042:web:305a6f64253de18f42058b",
-            measurementId: "G-4NT5Q23J2R"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();    
-
-        var db = firebase.firestore();
-
-        db.collection("users").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
-            });
-        });
-    </script> -->
 </body>
 </html>
