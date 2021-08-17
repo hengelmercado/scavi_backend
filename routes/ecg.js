@@ -16,7 +16,6 @@ router.get('/:id', [
 ], obtenerecg);
 
 router.post('/', [
-    check('nombre', message.nombre_req).not().isEmpty(),
     validarCampos,
 ], ecgPost);
 

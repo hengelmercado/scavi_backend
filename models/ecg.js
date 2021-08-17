@@ -10,6 +10,9 @@ const EcgSchema = Schema({
     rh: {
         type: Number
     },
+    timestamp: {
+        type: Number
+    },
     habilitado: {
         type: Boolean,
         require: true,

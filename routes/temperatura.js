@@ -16,7 +16,6 @@ router.get('/:id', [
 ], obtenertemperatura);
 
 router.post('/', [
-    check('nombre', message.nombre_req).not().isEmpty(),
     validarCampos,
 ], temperaturaPost);
 
