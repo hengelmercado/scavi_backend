@@ -12,6 +12,8 @@ const Server = require('./server');
 const Tercero = require('./tercero');
 const TipoDocumento = require('./tipoDocumento');
 const TipoInstrumento = require('./tipoInstrumento');
+const Ecg = require('./ecg');
+const Temperatura = require('./temperatura');
 
 
 
@@ -29,5 +31,7 @@ module.exports = {
     Server,
     Tercero,
     TipoDocumento,
-    TipoInstrumento
+    TipoInstrumento,
+    Ecg,
+    Temperatura
 }
