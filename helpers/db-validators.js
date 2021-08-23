@@ -1,5 +1,6 @@
 const { message } = require('../dictionary/dictionary');
-const { Departamento, Pais, Cargo, Persona, TipoDocumento, TipoInstrumento, Ciudad, Direccion, Tercero, Instrumento } = require('../models')
+const { Departamento, Pais, Cargo, Persona, TipoDocumento, TipoInstrumento, Ciudad, Direccion, Tercero, Instrumento } = require('../models');
+const { findById } = require('../models/ecg');
 const Medico = require('../models/medico');
 
 const existeDepartamentoPorId = async(id = '') => {
@@ -87,6 +88,16 @@ const existeConvenioPorId = async(id = '') => {
     }
 }
 
+const existeEcgPorId = async(collection, id) => {
+
+    console.log('collection', collection);
+
+    const datos = await findById(collection, id);
+    if (!datos) {
+        throw new Error(message.id_no_existe, id)
+    }
+}
+
 module.exports = {
     existeCargoPorId,
     existeCiudadPorId,
@@ -100,6 +111,7 @@ module.exports = {
     existeInstrumentoPorId,
     existeMedicoPorId,
     existeConvenioPorId,
+    existeEcgPorId,
 }
 
 

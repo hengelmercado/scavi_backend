@@ -1,90 +1,77 @@
 
 const { response } = require("express");
 const { message } = require("../dictionary/dictionary");
-const Ecg = require('../models/ecg');
+const {Ecg, find, findOne, findById, create, update} = require('../models/ecg');
 
-const ecgGet = async(req, res = response ) => {
+const obtenerTodos = async(req, res = response ) => {
 
-    const { limite = 5, desde = 0 } = req.query;
     const query = { habilitado: true }
+    const {collection} = req.body;
 
-    const [total, datos] = await Promise.all([
-       Ecg.countDocuments(query),
-       Ecg.find(query) 
-        .skip(Number(desde))
-        .limit(Number(limite))
-    ]);
+    const datos = await find(collection, query, req.query);
 
-    res.json({
-        total,
-        datos
-    });
+    res.json(datos);
 }
 
-const obtenerecg = async(req, res = response) => {
+const obtenerPorId = async(req, res = response) => {
 
-    const ecg = await Ecg.find({'habilitado':true}).sort('-timestamp').limit(1);
-
-    res.json(ecg);
-}
-
-const ecgPost = async(req, res = response) => {
-
-    const { _id, habilitado, ...datos } = req.body;
-    datos.nombre = await datos.nombre.replace(/^\w/, (c) => c.toUpperCase());
-
-    const ecgDB = await Ecg.findOne({nombre: datos.nombre});
-    if(ecgDB){
-        return res.status(400).json({
-            msg: `${message.nombre_existe} - ${ecgDB.nombre}`
-        });
-    }
-    
-    const ecg = new Ecg(datos);
-
-    await ecg.save();
-
-    res.json({
-        ecg
-    });
-}
-
-const ecgPut = async(req, res = response) => {
     const { id } = req.params;
-    const { _id, habilitado, ...datos } = req.body;
-    if(datos.nombre){
-        datos.nombre = datos.nombre.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
-    }
-    
-    const ecgDB = await Ecg.findOne({nombre: datos.nombre});
-    if(ecgDB && String(ecgDB._id) !== id){
-        return res.status(400).json({
-            msg: `${message.nombre_existe} - ${ecgDB.nombre}`
-        });
-    }
+    const { collection} = req.body;
 
-    const ecg = await Ecg.findByIdAndUpdate(id, datos, {new: true});
+    const datos = await findById(collection, id);
 
-    res.json({
-        ecg
-    });
+    res.json(datos);
 }
 
-const ecgDelete = async(req, res = response) => {
-    const { id } = req.params;
+const obtenerUltimo = async(req, res = response) => {
 
-    const ecg = await Ecg.findByIdAndUpdate(id, {habilitado: false}, {new: true});
+    //const ecg = await Ecg.find({'habilitado':true}).sort('-timestamp').limit(1);
 
-    res.json({
-        ecg
-    });
+    const { collection } = req.params;
+    const query = {
+        habilitado: {
+            'habilitado':true
+        },
+        sort:'-timestamp',
+        limite: 1 
+    }
+
+    const datos = await findOne(collection, query);
+
+    res.json(datos);
+}
+
+const crearRegistro = async(req, res = response) => {
+
+    const { _id, habilitado, collection, ...datos } = req.body;    
+    const registro = await create(collection, datos)
+
+    res.json(registro);
+}
+
+const actualizarRegistro = async(req, res = response) => {
+    const { id, collection } = req.params;
+    const { _id, habilitado, ...datos } = req.body;
+
+    const actualizar = await update(collection, datos, id);
+
+    res.json(actualizar);
+}
+
+const borrarRegistro = async(req, res = response) => {
+    const { id, collection } = req.params;
+
+    const actualizar = await update(collection, {habilitado: false}, id);
+
+    res.json(actualizar);
 }
 
 
 module.exports = {
-    ecgGet,
-    obtenerecg,
-    ecgPost,
-    ecgPut,
-    ecgDelete
+    obtenerTodos,
+    obtenerPorId,
+    obtenerUltimo,
+    ecgPost: crearRegistro,
+    ecgPut: actualizarRegistro,
+    ecgDelete: borrarRegistro
 }

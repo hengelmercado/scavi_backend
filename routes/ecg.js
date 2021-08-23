@@ -1,29 +1,40 @@
 const { Router } = require('express');
-const { check } = require('express-validator');
-const { existeecgPorId } = require('../helpers/db-validators');
+const { check, param } = require('express-validator');
+const { existeEcgPorId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { ecgGet, ecgPost, ecgPut, ecgDelete, obtenerecg } = require('../controllers/ecg');
+const { ecgPost, ecgPut, ecgDelete, obtenerTodos, obtenerPorId, obtenerUltimo } = require('../controllers/ecg');
 const { message } = require('../dictionary/dictionary');
 
 const router = Router();
 
-router.get('/', ecgGet);
+router.get('/', obtenerTodos);
 
-router.get('/:id', obtenerecg);
+router.get('/:id', [
+    check('id', message.id_no_valid).isMongoId(),
+    validarCampos,
+], obtenerPorId);
+
+router.get('/:collection/:ultimo',[
+    check('ultimo', 'Ultimo requerido (true)').not().isEmpty(),
+    check('collection', 'collection requerido.').not().isEmpty(),
+    validarCampos
+], obtenerUltimo);
 
 router.post('/', [
     validarCampos,
 ], ecgPost);
 
-router.put('/:id', [
+router.put('/:collection/:id', [
+    check('collection', 'Colección requerida').not().isEmpty(),
     check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existeecgPorId),
+    //check(['collection', 'id']).custom(existeEcgPorId),
     validarCampos,
 ], ecgPut);
 
-router.delete('/:id', [
+router.delete('/:collection/:id', [
+    check('collection', 'Colección requerida').not().isEmpty(),
     check('id', message.id_no_valid).isMongoId(),
-    check('id').custom(existeecgPorId),
+    //check('id').custom(existeEcgPorId),
     validarCampos,
 ], ecgDelete);
 
