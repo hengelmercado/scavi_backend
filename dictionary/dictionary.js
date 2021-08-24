@@ -30,6 +30,7 @@ const referencias = {
 }
 
 const rutas = {
+    auth            :   '/api/auth',
     cargo           :   '/api/cargo',
     ciudad          :   '/api/ciudad',
     departamento    :   '/api/departamento',
@@ -42,7 +43,8 @@ const rutas = {
     tercero         :   '/api/tercero',
     tipoDocumento   :   '/api/tipoDocumento',
     tipoInstrumento :   '/api/tipoInstrumento',
-    dataInstrument :   '/api/dataInstrument',
+    usuario         :   '/api/usuario',
+    dataInstrument  :   '/api/dataInstrument',
 }
 
 

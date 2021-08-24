@@ -36,6 +36,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(rutas.auth, require('../routes/auth'));
         this.app.use(rutas.cargo, require('../routes/cargo'));
         this.app.use(rutas.ciudad, require('../routes/ciudad'));
         this.app.use(rutas.ecg, require('../routes/ecg'));
@@ -49,6 +50,7 @@ class Server {
         this.app.use(rutas.tipoDocumento, require('../routes/tipoDocumento'));
         this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
         this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
+        this.app.use(rutas.usuario, require('../routes/usuarios'));
         this.app.use(rutas.dataInstrument, require('../routes/dataInstrument'));
     }
     

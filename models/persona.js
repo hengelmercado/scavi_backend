@@ -3,6 +3,11 @@ const { Schema, model } = require('mongoose');
 const { message } = require('../dictionary/dictionary');
 
 const PersonaSchema = Schema({
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        require: true
+    },
     primer_nombre: {
         type: String,
         required: [true, message.prim_nombre_req]

@@ -445,5 +445,5 @@ function ecg(){
     });
 }
 
-setInterval(ecg, 3000);
+//setInterval(ecg, 3000);
 
