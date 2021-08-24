@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 const { existeTipoDocumentoPorId, existePersonaPorId, existeDireccionPorId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { message } = require('../dictionary/dictionary');
-const { obtenerPersonas, obtenerPersona, crearPersona, actualizarPersona, borrarPersona
+const { obtenerPersonas, obtenerPersona, crearPersona, actualizarPersona, borrarPersona, obtenerPersonaEmail
  } = require('../controllers/persona');
 
 const router = Router();
@@ -15,6 +15,10 @@ router.get('/:id', [
     check('id').custom(existePersonaPorId),
     validarCampos,
 ], obtenerPersona);
+
+router.post('/email', [
+    validarCampos,
+], obtenerPersonaEmail);
 
 router.post('/', [
     check('tipo_identificacion', message.id_no_valid).isMongoId(),

@@ -34,6 +34,18 @@ const obtenerPersona = async(req, res = response) => {
 
 }
 
+const obtenerPersonaEmail = async(req, res = response) => {
+
+    const { email } = req.body;
+
+    const persona = await Persona.findOne({correo: email})
+                        .populate('tipo_identificacion', 'nombre')
+                        .populate('direccion');
+
+    res.json(persona);
+
+}
+
 const crearPersona = async(req, res = response) => {
 
     const  {_id, ...datos} = req.body;
@@ -89,5 +101,6 @@ module.exports = {
     crearPersona,
     actualizarPersona,
     obtenerPersona,
+    obtenerPersonaEmail,
     borrarPersona
 }
