@@ -37,6 +37,7 @@ const rutas = {
     direccion       :   '/api/direccion',
     ecg             :   '/api/ecg',
     instrumento     :   '/api/instrumento',
+    mensaje         :   '/api/mensaje',
     pais            :   '/api/pais',
     persona         :   '/api/persona',
     temperatura     :   '/api/temperatura',

@@ -38,7 +38,7 @@
                       <li><a class="dropdown-item" onclick="ajax('tercero')"> Terceros </a></li>
                       <li><a class="dropdown-item" onclick="ajax('instrumento')"> Instrumento </a></li>
                       <li><a class="dropdown-item" onclick="ajax('persona')"> Persona </a></li>
-                      <!-- <li><a class="dropdown-item" onclick="ajax('ECG')"> ECG </a></li> -->
+                      <li><a class="dropdown-item" onclick="ecgFunction('ECG')"> ECG </a></li>
                       <li><a class="dropdown-item" onclick="ajax('usuario')"> Usuario </a></li>
                       <!-- <li><a class="dropdown-item" onclick="ajax('medico')"> Médico </a></li>
                       <li><a class="dropdown-item" onclick="ajax('paciente')"> Paciente </a></li> -->
@@ -73,17 +73,31 @@
             </div>
 
             <div id="message" class="alert alert-warning alert-dismissible" role="alert">
-                <strong>Ecg</strong> 
+                <strong>Ecg <span id="allData"></span> </strong> 
                 <hr>
                 <span id="rh"></span>
                 <span id="rs"></span>
             </div>
 
+            <div class="row">
+                <div class="col-sm-8">
+                    <label for="serial" class="visually-hidden">Serial</label>
+                    <input type="text" class="form-control" id="serial" name="serial" placeholder="C74009" value="" required>
+
+                </div>
+                <div class="col-sm-4">
+                    <button onclick="ecgFunction()" class="btn btn-primary mb-3">Confirm</button>
+                </div>
+            </div>
             <h2>Formulario de: <span id="label"></span></h2>
                 <div class="row g-5">
                     <div class="col-md-7 col-lg-8">
 
-                        <form class="needs-validation" novalidate>
+                        <!-- <form class="row g-3" id="frmSerial"> -->
+
+                        <!-- </form> -->
+
+                        <form class="needs-validation" id="form" novalidate>
                             <input type="text" id="uid" name="uid" style="display: none;">
                             <div class="row g-3" id="bodyForm">
                                 <!-- <div class="col-sm-12">

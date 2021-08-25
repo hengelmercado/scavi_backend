@@ -1,13 +1,13 @@
-
-const { response } = require("express");
-const {Ecg, find, findOne, findById, create, update} = require('../models/ecg');
+const { find, create } = require("../models/mensaje");
 
 const obtenerTodos = async(req, res = response ) => {
 
+    const { collection, limite, desde} = req.query; 
     const query = { habilitado: true }
-    const {collection} = req.body;
 
-    const datos = await find(collection, query, req.query);
+    const Mensaje = find(collection);
+    const datos = await Mensaje.find({collection, query, limite, desde});
+
 
     res.json(datos);
 }
@@ -22,28 +22,13 @@ const obtenerPorId = async(req, res = response) => {
     res.json(datos);
 }
 
-const obtenerUltimo = async(req, res = response) => {
-
-    //const ecg = await Ecg.find({'habilitado':true}).sort('-timestamp').limit(1);
-
-    const { collection } = req.params;
-    const query = {
-        habilitado: {
-            'habilitado':true
-        },
-        sort:'-time',
-        limite: 1 
-    }
-
-    const datos = await findOne(collection, query);
-
-    res.json(datos);
-}
-
 const crearRegistro = async(req, res = response) => {
 
     const { _id, habilitado, collection, ...datos } = req.body;    
-    const registro = await create(collection, datos)
+
+    const Mensaje = create(collection, datos);
+
+    const registro = await Mensaje.save();
 
     res.json(registro);
 }
@@ -69,8 +54,7 @@ const borrarRegistro = async(req, res = response) => {
 module.exports = {
     obtenerTodos,
     obtenerPorId,
-    obtenerUltimo,
-    ecgPost: crearRegistro,
-    ecgPut: actualizarRegistro,
-    ecgDelete: borrarRegistro
+    crearRegistro,
+    actualizarRegistro,
+    borrarRegistro
 }

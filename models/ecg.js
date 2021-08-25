@@ -93,7 +93,6 @@ EcgSchema.methods.toJSON = function(){
     return data
 }
 
-
  EcgSchema.methods.find =  async function(params, callback) {
      const count = await model(params.collection).countDocuments(params.query, callback);
      const datos = await model(params.collection).find(params.query, callback)
@@ -130,7 +129,7 @@ const find = (collection, query, {limite=10, desde=0}) => {
             } else {
                 count += 1;
                 if(count == 1){
-                    object['count'] = result;
+                    object['total'] = result;
                 }else{
                     object['datos'] = result
                     resolve(object);
@@ -171,7 +170,8 @@ const findOne = (collection, query) => {
                 console.log(error);
                 reject(error);
             }else{
-                resolve(result);
+                if(result.length > 0)
+                    resolve(result[0]);
             }
         });
 
