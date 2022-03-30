@@ -53,6 +53,8 @@ class Server {
         this.app.use(rutas.tipoInstrumento, require('../routes/tipoInstrumento'));
         this.app.use(rutas.usuario, require('../routes/usuarios'));
         this.app.use(rutas.dataInstrument, require('../routes/dataInstrument'));
+        this.app.use(rutas.ccosto, require('../routes/ccosto'));
+        this.app.use(rutas.registro, require('../routes/registro'));
     }
     
     listen(){

@@ -11,12 +11,15 @@ const message = {
     tipo_identificacion_req :   'El tipo de identificación es obligatorio.',
     num_identificacion_req  :   'El numero de identificación es obligatorio.',
     correo_req              :   'El correo es obligatorio.',
-    telefono_req            :   'El telefono es obligatoria.',
+    telefono_req            :   'El telefono es obligatorio.',
     sexo_req                :   'El sexo es obligatorio.',
     fecha_naci_req          :   'La fecha de nacimiento es obligatorio.',
+    fecha                   :   'La fecha es obligatoria.',
     razon_soci_req          :   'La razón social es obligatoria.',
     persona_cont_req        :   'La persona de contacto es obligatoria.',
     siglas_req              :   'Las siglas son obligatorias.',
+    ccosto_req              :   'El Centro de Costo es obligatorio.',
+    codigo                  :   'El codigo es obligatorio.',
     id_no_valid             :   'No es un ID válido.',
     desc_tamano             :   'El tamaño maximo es de 100 caracteres.',
     id_no_existe            :   'El ID no existe:',
@@ -46,6 +49,8 @@ const rutas = {
     tipoInstrumento :   '/api/tipoInstrumento',
     usuario         :   '/api/usuario',
     dataInstrument  :   '/api/dataInstrument',
+    ccosto          :   '/api/ccosto',
+    registro        :   '/api/registro'
 }
 
 
