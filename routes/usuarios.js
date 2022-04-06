@@ -18,7 +18,7 @@ router.post('/',[
     check('password', 'El minímo debe ser de 6 letras').isLength({min: 6}),
     check('correo', 'El correo no es valido').isEmail(),
     check('correo').custom( correoExiste ),
-    check('role', 'No es un role valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    check('rol', 'No es un role valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
     //check('rol').custom( esRolValido ),
     validarCampos,
 ], usuariosPost);
