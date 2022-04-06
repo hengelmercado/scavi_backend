@@ -51,6 +51,7 @@ const usuariosPost = async (req, res = response) => {
 
 
     res.json({
+        ok: true,
         usuario
     });
 }
