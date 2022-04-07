@@ -39,21 +39,62 @@ const usuariosPut = (req, res = response) => {
 } 
 const usuariosPost = async (req, res = response) => {
 
-    const {nombre, correo, password, rol} = req.body;
-    const usuario = new Usuario({nombre, correo,password,rol});
+    const {nombre, correo, password, rol, img} = req.body;
+    const usr = new Usuario({nombre, correo, password, rol, img});
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
-    usuario.password = bcryptjs.hashSync(password, salt);
+    usr.password = bcryptjs.hashSync(password, salt);
 
     // Guardar en la DB
-    await usuario.save();
+    await usr.save();
+
+    try {
+        
+        // Verificar si el usuario existe
+        const usuario = await Usuario.findOne({correo});
+        if(!usuario) {
+            return res.json({
+                ok: false,
+                msg: 'Correo / Contraseña no son correctos - correo'
+            });
+        }
+
+        // Si el usuario esta activo
+        if(!usuario.estado) {
+            return res.json({
+                ok: false,
+                msg: 'Correo / Contraseña no son correctos - estado'
+            });
+        }
+        // Verificar la contraseña
+        const validPassword = bcryptjs.compareSync(password, usuario.password);
+        if(!validPassword){
+            return res.json({
+                ok: false,
+                msg: 'Correo / Contraseña no son correctos - Contraseña'
+            })
+        }
+        // Generar el JWT
+        const token = await generarJWT(usuario.id);
+
+        res.json({
+            ok: true,
+            token
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });    
+    }
 
 
-    res.json({
+    /* res.json({
         ok: true,
         usuario
-    });
+    }); */
 }
 const usuariosPatch = (req, res = response) => {
     res.json({

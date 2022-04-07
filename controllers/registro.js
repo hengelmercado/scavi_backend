@@ -35,6 +35,9 @@ const obtenerRegistro = async(req, res = response) => {
 const crearRegistros = async(req, res = response) => {
 
     const { _id, ...datos } = req.body;
+    const { uid } = req.usuario;
+
+    datos.usuario = uid;
 
     const registro = new Registro(datos);
     await registro.save();

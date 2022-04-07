@@ -14,9 +14,8 @@ router.get('/:id', [
 ], obtenerRegistro);
 
 router.post('/', [
-    check('usuario', message.id_no_existe).not().isEmpty(),
+    validarJWT,
     check('ccosto', message.ccosto_req).not().isEmpty(),
-    check('usuario', message.id_no_valid).isMongoId(),
     check('ccosto', message.id_no_valid).isMongoId(),
     validarCampos
 ], crearRegistros);
