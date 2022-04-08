@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { message } = require('../dictionary/dictionary');
 const { obtenerRegistros, obtenerRegistro, actualizarRegistros, borrarRegistros, crearRegistros } = require('../controllers/registro');
+const { validarJWT } = require('../middlewares');
 
 const router = Router();
 
