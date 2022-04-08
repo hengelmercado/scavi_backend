@@ -50,31 +50,6 @@ const usuariosPost = async (req, res = response) => {
     await usr.save();
 
     try {
-        
-        // Verificar si el usuario existe
-        const usuario = await Usuario.findOne({correo});
-        if(!usuario) {
-            return res.json({
-                ok: false,
-                msg: 'Correo / Contraseña no son correctos - correo'
-            });
-        }
-
-        // Si el usuario esta activo
-        if(!usuario.estado) {
-            return res.json({
-                ok: false,
-                msg: 'Correo / Contraseña no son correctos - estado'
-            });
-        }
-        // Verificar la contraseña
-        const validPassword = bcryptjs.compareSync(password, usuario.password);
-        if(!validPassword){
-            return res.json({
-                ok: false,
-                msg: 'Correo / Contraseña no son correctos - Contraseña'
-            })
-        }
         // Generar el JWT
         const token = await generarJWT(usuario.id);
 
