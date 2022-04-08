@@ -17,7 +17,8 @@ const validarJWT = async( req = request, res = response, next ) => {
         
         const {uid} = jwt.verify(token, process.env.SECRETORPRIVATEKEY)
 
-        const usuario = await Usuario.findById(uid);
+        const {_id, _v, ...datos} = await Usuario.findById(uid);
+        let usuario = datos._doc;
         
         if(!usuario){
             return res.json({
@@ -33,11 +34,12 @@ const validarJWT = async( req = request, res = response, next ) => {
             })
         }
 
+
+        usuario.uid = _id;       
         req.usuario = usuario;
 
         next();
     } catch (error) {
-        console.log(error);
         return res.json({
             token: false,
             msg: 'Token no válido ' + error
